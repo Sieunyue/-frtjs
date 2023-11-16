@@ -1,0 +1,15 @@
+test/
+script/
+packages/
+.config.json
+.eslintignore
+.eslintrc.js
+.gitignore
+.npmignore
+analyzer.html
+jest.config.ts
+pnpm-lock.yaml
+pnpm-workspace.yaml
+rollup.config.js
+tsconfig.build.json
+tsconfig.json
