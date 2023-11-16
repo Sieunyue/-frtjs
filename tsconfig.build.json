@@ -3,10 +3,10 @@
   "compilerOptions": {
 //    "declaration": true,
     "module": "ESNext",
-//    "declarationDir": "./dist/packages/", // 类型声明文件的输出目录
+//    "declarationDir": "./dist/src/", // 类型声明文件的输出目录
   },
   "include": [
-    "packages"
+    "src"
   ],
   "exclude": [
     "node_modules"

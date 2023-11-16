@@ -1,7 +1,7 @@
 import puppeteer, { Browser, Page } from 'puppeteer'
 import config from '../../../.config.json'
-import { BaseJSErrorBreadcrumbType, BaseResourceBreadcrumbType, BaseTransportDataType, BaseXhrBreadcrumbType } from '../../../packages/types'
-import { BrowserEventTypes, SDK_NAME, SDK_VERSION, TransportCategory } from '../../../packages/comm'
+import { BaseJSErrorBreadcrumbType, BaseResourceBreadcrumbType, BaseTransportDataType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '../../../src/types'
+import { SDK_NAME, SDK_VERSION } from '../../../src/comm'
 
 describe('Browser monitor e2e:', () => {
   let browser: Browser
@@ -12,12 +12,12 @@ describe('Browser monitor e2e:', () => {
     return new Promise((resolve, reject) => {
       page.on('requestfinished', (req) => {
         
-        try{
-          if(req.url() === 'http://localhost:9996/errors/upload'){
+        try {
+          if (req.url() === 'http://localhost:9996/errors/upload') {
             req.response()!.json().then(r => resolve(r))
             page.removeAllListeners()
           }
-        }catch (e){
+        } catch (e) {
           reject(e)
         }
       })
@@ -26,16 +26,16 @@ describe('Browser monitor e2e:', () => {
   
   
   beforeEach(async () => {
-    browser = await puppeteer.launch({headless: 'new'})
+    browser = await puppeteer.launch({ headless: 'new' })
     page = await browser.newPage()
     
     await page.goto(config.browserUrl)
   })
-
+  
   afterEach(async () => {
     browser.close()
   })
-
+  
   afterAll(() => {
     browser.close()
   })
@@ -91,7 +91,7 @@ describe('Browser monitor e2e:', () => {
       expect(r.context!.method).toBe('post')
       expect(r.context!.type).toBe(BrowserEventTypes.XHR)
       expect(r.context!.status).toBe('404')
-      expect(r.context!.body).toBe(JSON.stringify({e2e: 'test'}))
+      expect(r.context!.body).toBe(JSON.stringify({ e2e: 'test' }))
     },
     timeout
   )

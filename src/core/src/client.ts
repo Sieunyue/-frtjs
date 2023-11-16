@@ -1,7 +1,6 @@
-import { SDK_NAME, SDK_VERSION } from '@frtjs/comm'
-import { BaseBreadcrumbType, BaseClientType, BaseOptionsType, BasePluginType, EventTypes, TransportCategory } from '@frtjs/types'
+import { SDK_NAME, SDK_VERSION } from '@/comm'
+import { BaseBreadcrumbType, BaseClientType, BaseOptionsType, BasePluginType, BaseTransportDataType, EventTypes, TransportCategory } from '@/types'
 import mitt, { Emitter } from 'mitt'
-import { BaseTransport } from './transport'
 
 export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> implements BaseClientType<O> {
   SDK_NAME = SDK_NAME
@@ -9,7 +8,6 @@ export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> im
   private _subscribe: Emitter<Record<EventTypes, any>>
   options: O
   breadcrumbs: BaseBreadcrumbType[]
-  abstract transport: BaseTransport
   
   constructor(options = {}) {
     this.options = Object.assign({ maxBreadcrumbs: 20 }, options) as O
@@ -36,7 +34,8 @@ export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> im
     this.breadcrumbs.push(data)
     
     if (this.breadcrumbs.length >= this.options.maxBreadcrumbs!) {
-      this.transport.send(TransportCategory.API, [...this.breadcrumbs]).then()
+      const data = await this.transform(TransportCategory.API, [...this.breadcrumbs])
+      this.send(data).then()
       this.breadcrumbs.length = 0
     }
   }
@@ -46,5 +45,25 @@ export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> im
   }
   
   
-  abstract send(data: any): void
+  async transform(category: TransportCategory, data: BaseBreadcrumbType | BaseBreadcrumbType[] | undefined) {
+    const authInfo = await this.options.getAuthInfo()
+    const transformData: BaseTransportDataType = {
+      ...authInfo,
+      category,
+      sdkName: SDK_NAME,
+      sdkVersion: SDK_VERSION
+    }
+    
+    if (Array.isArray(data)) {
+      transformData.contexts = data
+    } else {
+      transformData.context = data
+    }
+    
+    return transformData
+  }
+  
+  abstract send(data: BaseTransportDataType): Promise<void>
+  
+  
 }

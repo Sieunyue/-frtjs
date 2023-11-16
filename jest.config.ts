@@ -14,9 +14,9 @@ export default {
   preset: 'ts-jest',
   moduleNameMapper: {
     '@/test/(.*)': '<rootDir>/test/$1',
-    '@frtjs/(.*)': '<rootDir>/packages/$1/src/index'
+    'frtjs/(.*)': '<rootDir>/src/$1/src/index'
   },
-  globalSetup: './test/config/setup.js',
-  globalTeardown: './test/config/teardown.js',
-  testEnvironment: './test/config/puppeteer_environment.js'
+  globalSetup: './test/config/setup.cjs',
+  globalTeardown: './test/config/teardown.cjs',
+  testEnvironment: './test/config/puppeteer_environment.cjs'
 }

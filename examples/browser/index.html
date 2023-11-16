@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>browser e2e</title>
-  <script src="/browserDist/index.min.js"></script>
+  <script src="/lib/index.min.js"></script>
 </head>
 <body>
 <script>
-  window._frtjs_ = frtjs.init({
+  window._frtjs_ = frtjs.browser.init({
     maxBreadcrumbs: 5,
     dsn: 'http://localhost:9996/errors/upload',
     getAuthInfo(){

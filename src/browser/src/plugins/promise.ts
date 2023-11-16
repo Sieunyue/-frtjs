@@ -1,5 +1,5 @@
-import { BaseJSErrorBreadcrumbType, BasePluginType, BasePromiseBreadcrumbType, BrowserEventTypes, TransportCategory } from '@frtjs/types'
-import {  getTimestampValue, parseStackFrames, toHashCode } from '@frtjs/comm'
+import { BaseJSErrorBreadcrumbType, BasePluginType, BasePromiseBreadcrumbType, BrowserEventTypes, TransportCategory } from '@/types'
+import {  getTimestampValue, parseStackFrames, toHashCode } from '@/comm'
 
 const getTraceId = (breadcrumb: BasePromiseBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.message, breadcrumb.errorType].join(',')).toString()
@@ -33,6 +33,6 @@ export const promiseErrorPlugin: BasePluginType = {
     }
   },
   post(transformedData: BaseJSErrorBreadcrumbType) {
-    this.transport.send(TransportCategory.ERROR, transformedData)
+    this.transform(TransportCategory.ERROR, transformedData).then(r => this.send(r))
   }
 }

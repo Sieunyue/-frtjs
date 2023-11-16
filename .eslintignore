@@ -1,6 +1,8 @@
 /doc
-**/dist
+**/lib
 **/node_modules
 /script
-.eslintrc.js
+.eslintrc.cjs
 rollup.config.js
+/test
+/examples

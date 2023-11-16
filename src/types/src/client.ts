@@ -1,15 +1,12 @@
-import { BasePluginType } from './plugin'
-import { BaseOptionsType } from './options'
-import { EventTypes } from './constant'
-import { BaseTransportType } from './transport'
+import { BasePluginType, BaseOptionsType, EventTypes, TransportCategory, BaseTransportDataType } from '../'
 
 export interface BaseClientType<O extends BaseOptionsType = BaseOptionsType> {
   breadcrumbs: BaseBreadcrumbType[],
   options: O
-  transport: BaseTransportType
   use: (plugin: BasePluginType) => BaseClientType
   getOptions: () => O
-  send: (data: any) => void
+  send: (data: BaseTransportDataType ) => Promise<void>
+  transform: (category: TransportCategory, data: BaseBreadcrumbType | BaseBreadcrumbType[]) => Promise<BaseTransportDataType>
   pushBreadCrumbs: (data: BaseBreadcrumbType) => void
 }
 

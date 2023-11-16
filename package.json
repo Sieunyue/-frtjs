@@ -1,17 +1,20 @@
 {
   "name": "frtjs",
-  "version": "1.0.6",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "node script/build.js",
     "watch": "nodemon script/build.js",
     "serve": "node examples/server/index.js",
     "e2e": "`nohup node ./examples/server/index.js >/dev/null 2>&1 &` && jest --runTestsByPath ./test/e2e/browser/index.test.ts  --config jest.config.ts",
     "test": "pnpm run e2e",
-    "lint": "eslint --fix --ext .ts packages"
+    "lint": "eslint --fix --ext .ts src"
   },
-  "keywords": ["monitor frontjs"],
+  "keywords": [
+    "monitor frontjs"
+  ],
   "author": "seiunyue",
   "license": "ISC",
   "devDependencies": {
@@ -41,6 +44,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@rollup/plugin-alias": "^5.0.1",
     "mitt": "^3.0.1"
   },
   "nodemonConfig": {
@@ -51,10 +55,10 @@
     "verbose": true
   },
   "exports": {
-    "./browser": {
-      "types": "./dist/types",
-      "require": "./dist/browser/index.js",
-      "import": "./dist/browser/index.esm.js"
+    ".": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.js",
+      "import": "./lib/index.esm.js"
     }
   }
 }

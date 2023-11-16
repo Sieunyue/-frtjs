@@ -1,9 +1,9 @@
 test/
 script/
-packages/
+src/
 .config.json
 .eslintignore
-.eslintrc.js
+.eslintrc.cjs
 .gitignore
 .npmignore
 analyzer.html
@@ -14,5 +14,5 @@ rollup.config.js
 tsconfig.build.json
 tsconfig.json
 .idea
-/dist/**/*.map
+/lib/**/*.map
 examples

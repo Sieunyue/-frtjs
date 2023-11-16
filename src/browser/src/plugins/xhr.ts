@@ -1,5 +1,5 @@
-import { BaseJSErrorBreadcrumbType, BasePluginType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '@frtjs/types'
-import { getTimestampValue, toHashCode } from '@frtjs/comm'
+import { BaseJSErrorBreadcrumbType, BasePluginType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '@/types'
+import { getTimestampValue, toHashCode } from '@/comm'
 
 const getTraceId = (breadcrumb: BaseXhrBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.method, breadcrumb.xhrUrl].join(',')).toString()
@@ -15,7 +15,7 @@ export const xhrErrorPlugin: BasePluginType = {
         // oXMLHttpRequest 为原生的 XMLHttpRequest，可以用以 SDK 进行数据上报，区分业务
         (window as any).oXMLHttpRequest = oXMLHttpRequest
       }
-     
+      
       
       (window as any).XMLHttpRequest = function () {
         // 覆写 window.XMLHttpRequest
@@ -53,7 +53,7 @@ export const xhrErrorPlugin: BasePluginType = {
           
           if (!(status === 200)) {
             emit(breadcrumb)
-          }else{
+          } else {
             clientThis.pushBreadCrumbs(breadcrumb)
           }
         })
@@ -67,6 +67,6 @@ export const xhrErrorPlugin: BasePluginType = {
     }
   },
   post(transformedData: BaseJSErrorBreadcrumbType) {
-    this.transport.send(TransportCategory.ERROR, transformedData)
+    this.transform(TransportCategory.ERROR, transformedData).then(r => this.send(r))
   }
 }

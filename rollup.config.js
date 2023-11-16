@@ -1,32 +1,41 @@
-const resolve = require('@rollup/plugin-node-resolve')
-const commonjs = require('@rollup/plugin-commonjs')
-const json = require('@rollup/plugin-json')
-const typescript = require('rollup-plugin-typescript2')
-const { dts } = require('rollup-plugin-dts')
-const terser = require('@rollup/plugin-terser')
-const { visualizer } = require("rollup-plugin-visualizer")
-const sizes = require("rollup-plugin-sizes")
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import typescript from 'rollup-plugin-typescript2'
+import { dts } from 'rollup-plugin-dts'
+import terser from '@rollup/plugin-terser'
+import { visualizer } from 'rollup-plugin-visualizer'
+import sizes from 'rollup-plugin-sizes'
+import alias from '@rollup/plugin-alias'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const pkg = process.env.TARGET
+const sdkName = 'frtjs'
+const __filename = fileURLToPath(import.meta.url)
+
+const __dirname = path.dirname(__filename)
+
 /** @type {import('rollup').RollupOptions} */
-module.exports = [
+export default [
   {
-    input: `packages/${pkg}/index.ts`,
+    input: `src/index.ts`,
     output: [
       {
-        file: `dist/${pkg}/index.js`,
+        file: `lib/index.js`,
         format: 'cjs',
+        exports: "named",
         sourcemap: true
       },
       {
-        file: `dist/${pkg}/index.esm.js`,
+        file: `lib/index.esm.js`,
         format: 'esm',
         sourcemap: true
       },
       {
-        file: `dist/${pkg}/index.min.js`,
+        file: `lib/index.min.js`,
         format: 'iife',
         name: 'frtjs',
+        exports: "named",
         sourcemap: true
       }
     ],
@@ -41,27 +50,34 @@ module.exports = [
       json(),
       typescript({
         tsconfig: 'tsconfig.build.json',
-        useTsconfigDeclarationDir: true,
-        tsconfigOverride: {
-          // compilerOptions: {
-          //   declaration: true,
-          //   declarationMap: true,
-          //   declarationDir: `dist/`, // 类型声明文件的输出目录
-          //   module: 'ES2015'
-          // }
-        }
+        useTsconfigDeclarationDir: true
+        // tsconfigOverride: {
+        //   compilerOptions: {
+        //     declaration: true,
+        //     declarationMap: true,
+        //     declarationDir: `dist/`, // 类型声明文件的输出目录
+        //     module: 'ES2015',
+        //     paths
+        //   }
+        // }
       }),
       terser()
     ]
   },
   {
-    input: `packages/types/index.ts`,
+    input: `src/index.ts`,
     output: [
       {
-        file: `dist/types/index.d.ts`,
+        file: `lib/index.d.ts`,
         format: 'esm'
       }
     ],
-    plugins: [dts()]
+    plugins: [
+      dts(), alias({
+        entries: [
+          { find: '@', replacement: path.resolve(__dirname, 'src') }
+        ]
+      })
+    ]
   }
 ]

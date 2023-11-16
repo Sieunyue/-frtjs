@@ -1,11 +1,16 @@
-const express = require('express')
-const path = require('path')
-const config = require('../../.config.json')
-const { createServer } = require('http')
+import express from 'express'
+import path from 'path'
+import config from '../../.config.json' assert {type: 'json'}
+import { createServer } from 'http'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+
+const __dirname = path.dirname(__filename)
 
 const staticPath = {
   'browser': path.resolve(__dirname, '../browser'),
-  'browserDist': path.resolve(__dirname, '../../dist/browser')
+  'lib': path.resolve(__dirname, '../../lib')
 }
 
 const app = express()
