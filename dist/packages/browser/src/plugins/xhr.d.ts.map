@@ -1,0 +1,1 @@
+{"version":3,"file":"xhr.d.ts","sourceRoot":"","sources":["../../../../../packages/browser/src/plugins/xhr.ts"],"names":[],"mappings":"AAAA,OAAO,EAA6B,cAAc,EAAyB,MAAM,eAAe,CAAA;AAChG,OAAO,EAAE,iBAAiB,EAAqB,MAAM,cAAc,CAAA;AAOnE,eAAO,MAAM,cAAc,EAAE,cAAc,CAAC,iBAAiB,CAAC,GAAG,CA4DhE,CAAA"}

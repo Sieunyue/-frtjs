@@ -1,0 +1,1 @@
+{"version":3,"file":"promise.d.ts","sourceRoot":"","sources":["../../../../../packages/browser/src/plugins/promise.ts"],"names":[],"mappings":"AAAA,OAAO,EAA6B,cAAc,EAA6B,MAAM,eAAe,CAAA;AACpG,OAAO,EAAE,iBAAiB,EAAuC,MAAM,cAAc,CAAA;AAOrF,eAAO,MAAM,kBAAkB,EAAE,cAAc,CAAC,iBAAiB,CAAC,kBAAkB,CA+BnF,CAAA"}
