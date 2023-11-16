@@ -1,0 +1,10 @@
+{
+  "name": "@frtjs/types",
+  "version": "1.0.0",
+  "description": "@frtjs/types",
+  "author": "sieunyue",
+  "license": "MIT",
+  "dependencies": {
+    "@frtjs/comm": "workspace:*"
+  }
+}

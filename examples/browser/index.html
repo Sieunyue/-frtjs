@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>browser e2e</title>
+  <script src="/browserDist/index.min.js"></script>
+</head>
+<body>
+<script>
+  window._frtjs_ = frtjs.init({
+    maxBreadcrumbs: 10,
+    dsn: 'http://localhost:9996/errors/upload',
+    getAuthInfo(){
+      return {
+        userName: 'e2e test'
+      }
+    }
+  })
+</script>
+<h1>native-js:控制台输出信息调试</h1>
+<button id="codeErr" onclick="codeError()">代码错误</button>
+<button id="normalGetReq" onclick="onClickGetXhrNormal()">xhrGet正常请求</button>
+<button id="exceptionGetReq" onclick="onClickGetXhrError()">xhrGet异常请求</button>
+<button id="normalPostReq" onclick="onClickPostXhrNormal()">xhrPost正常请求</button>
+<button id="exceptionPostReq" onclick="onClickPostXhrError()">xhrPost异常请求</button>
+<button id="promiseError" onclick="promiseError()">promiseError</button>
+<button id="resourceError" onclick="onResourceError()">资源异常</button>
+<script>
+  function codeError() {
+    let a = {}
+    a.split('/')
+  }
+
+  function promiseError() {
+    const promiseWrap = () =>
+        new Promise((resolve, reject) => {
+          reject('promise reject')
+        })
+    promiseWrap().then((res) => {
+      console.log('res', res)
+    })
+  }
+
+  function onClickGetXhrNormal() {
+    const xhr = new XMLHttpRequest()
+    xhr.open('get', '/normal/get')
+    xhr.setRequestHeader('content-type', 'application/json')
+    xhr.send()
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText)
+      }
+    }
+  }
+
+  function onClickGetXhrError() {
+    const xhr = new XMLHttpRequest()
+    xhr.open('get', '/exception/get')
+    xhr.setRequestHeader('content-type', 'application/json')
+    xhr.send()
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText)
+      }
+    }
+  }
+
+  function onClickPostXhrNormal() {
+    const xhr = new XMLHttpRequest()
+    xhr.open('post', '/normal/post')
+    xhr.setRequestHeader('content-type', 'application/json')
+    xhr.send()
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText)
+      }
+    }
+  }
+
+  function onClickPostXhrError() {
+    const xhr = new XMLHttpRequest()
+    xhr.open('post', '/exception/post')
+    xhr.setRequestHeader('content-type', 'application/json')
+    xhr.send(JSON.stringify({e2e: 'test'}))
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText)
+      }
+    }
+  }
+
+  function onResourceError(){
+    const img = document.createElement('img')
+    img.src = '/error/img'
+    document.body.appendChild(img)
+  }
+</script>
+</body>
+</html>

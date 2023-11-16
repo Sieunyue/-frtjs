@@ -1,0 +1,10 @@
+{
+  "name": "@frtjs/comm",
+  "version": "1.0.0",
+  "description": "@frtjs/comm",
+  "private": true,
+  "author": "sieunyue",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
