@@ -1,8 +1,8 @@
-import { BaseBreadcrumbType, BaseOptionsType } from '@frtjs/types';
+import { BaseBreadcrumbType, BaseClientType } from '@frtjs/types';
 import { TransportCategory } from '@frtjs/comm';
-export declare abstract class BaseTransport<O extends BaseOptionsType = BaseOptionsType> {
-    options: O;
-    constructor(options: O);
+export declare abstract class BaseTransport<C extends BaseClientType = BaseClientType> {
+    client: C;
+    constructor(client: C);
     /**
      * 发送数据到服务端
      */

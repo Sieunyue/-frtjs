@@ -10,9 +10,9 @@ export const enum TransportCategory {
 export const enum BrowserEventTypes  {
   XHR = 'xhr',
   FETCH = 'fetch',
-  JS_ERROR = 'jsError',
+  JS = 'js',
   DOM = 'dom',
-  RES_ERROR = 'resourceError',
+  RESOURCE = 'resource',
   UNHANDLEDREJECTION = 'unhandledrejection',
   ROUTER = 'router'
 }

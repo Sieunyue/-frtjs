@@ -10,7 +10,7 @@ export class BrowserClient extends BaseClient<BrowserOptionsType> {
   constructor(options: BrowserOptionsType) {
     super(options)
     
-    this.transport = new BrowserTransport(options)
+    this.transport = new BrowserTransport(this)
   }
   
   send(data: BaseBreadcrumbType){

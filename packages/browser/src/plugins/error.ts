@@ -5,7 +5,7 @@ const getTraceId = (breadcrumb: BaseJSErrorBreadcrumbType) => {
   return toHashCode([breadcrumb.filename, breadcrumb.functionName, breadcrumb.position].join(',')).toString()
 }
 export const jsErrorPlugin: BasePluginType = {
-  name: BrowserEventTypes.JS_ERROR,
+  name: BrowserEventTypes.JS,
   trace(emit) {
     if (window) {
       window.addEventListener('error', (e) => {
@@ -21,7 +21,7 @@ export const jsErrorPlugin: BasePluginType = {
           url: window.location.href,
           timestamp: getTimestampValue().toString(),
           userAgent: navigator.userAgent,
-          type: BrowserEventTypes.JS_ERROR,
+          type: BrowserEventTypes.JS,
           message: e.error.message,
           functionName: stacks[0]?.functionName ?? ''
         }

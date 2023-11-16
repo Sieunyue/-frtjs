@@ -15,6 +15,7 @@ describe('Browser monitor e2e:', () => {
         try{
           if(req.url() === 'http://localhost:9996/errors/upload'){
             req.response()!.json().then(r => resolve(r))
+            page.removeAllListeners()
           }
         }catch (e){
           reject(e)
@@ -22,6 +23,7 @@ describe('Browser monitor e2e:', () => {
       })
     })
   }
+  
   
   beforeEach(async () => {
     browser = await puppeteer.launch({headless: 'new'})
@@ -49,7 +51,7 @@ describe('Browser monitor e2e:', () => {
       expect(r.sdkVersion).toBe(SDK_VERSION)
       expect(r.sdkName).toBe(SDK_NAME)
       expect(r.context!.url).toBe('http://localhost:9996/browser/index.html')
-      expect(r.context!.type).toBe(BrowserEventTypes.JS_ERROR)
+      expect(r.context!.type).toBe(BrowserEventTypes.JS)
       expect(r.context!.functionName).toBe('codeError')
     },
     timeout
@@ -107,8 +109,30 @@ describe('Browser monitor e2e:', () => {
       expect(r.context!.url).toBe('http://localhost:9996/browser/index.html')
       expect(r.context!.filename).toBe('http://localhost:9996/error/img')
       expect(r.context!.outerHTML).toBe('<img src="/error/img">')
-      expect(r.context!.type).toBe(BrowserEventTypes.RES_ERROR)
+      expect(r.context!.type).toBe(BrowserEventTypes.RESOURCE)
       expect(r.context!.tagName).toBe('IMG')
+    },
+    timeout
+  )
+  
+  it(
+    'api normal',
+    async () => {
+      const p = errorUploadHandler()
+      await page.click('#normalPostReq')
+      await page.click('#normalPostReq')
+      await page.click('#normalPostReq')
+      await page.click('#normalPostReq')
+      await page.click('#normalPostReq')
+      const r = (await p) as BaseTransportDataType<BaseXhrBreadcrumbType>
+      
+      expect(r.category).toBe(TransportCategory.API)
+      expect(r.sdkVersion).toBe(SDK_VERSION)
+      expect(r.sdkName).toBe(SDK_NAME)
+      expect(r.contexts!.length).toBe(5)
+      // @ts-ignore
+      const stackLength = await page.evaluate(() => window._frtjs_.breadcrumbs.length)
+      expect(stackLength).toBe(0)
     },
     timeout
   )

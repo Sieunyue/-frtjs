@@ -1,21 +1,21 @@
-import { BaseBreadcrumbType, BaseOptionsType } from '@frtjs/types'
+import { BaseBreadcrumbType, BaseClientType, BaseOptionsType } from '@frtjs/types'
 import { BaseTransportDataType } from '@frtjs/types/src/transport'
 import { SDK_NAME, SDK_VERSION, TransportCategory } from '@frtjs/comm'
 
-export abstract class BaseTransport<O extends BaseOptionsType = BaseOptionsType> {
-  options: O
-  constructor(options: O) {
-    this.options = options
+export abstract class BaseTransport<C extends BaseClientType = BaseClientType> {
+  client: C
+  constructor(client: C) {
+    this.client = client
   }
   /**
    * 发送数据到服务端
    */
   async send(category: TransportCategory, data: BaseBreadcrumbType | BaseBreadcrumbType[]): Promise<void> {
-    if(!this.options.dsn){
+    if(!this.client.options.dsn){
       return
     }
     
-    const authInfo = await this.options.getAuthInfo()
+    const authInfo = await this.client.options.getAuthInfo()
     const transformData: BaseTransportDataType = {
       ...authInfo,
       category,

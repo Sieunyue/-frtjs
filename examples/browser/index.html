@@ -8,7 +8,7 @@
 <body>
 <script>
   window._frtjs_ = frtjs.init({
-    maxBreadcrumbs: 10,
+    maxBreadcrumbs: 5,
     dsn: 'http://localhost:9996/errors/upload',
     getAuthInfo(){
       return {
@@ -67,9 +67,9 @@
 
   function onClickPostXhrNormal() {
     const xhr = new XMLHttpRequest()
-    xhr.open('post', '/normal/post')
+    xhr.open('post', '/api/test')
     xhr.setRequestHeader('content-type', 'application/json')
-    xhr.send()
+    xhr.send(JSON.stringify({date: new Date().valueOf().toString()}))
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         console.log(xhr.responseText)

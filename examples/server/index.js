@@ -22,6 +22,13 @@ app.post(config.errorUploadUrl, (req, res) => {
   res.send(req.body)
 })
 
+app.post(config.normalUrl, (req, res) => {
+  res.send('ok')
+})
+app.post(config.apiUploadUrl, (req, res) => {
+  res.send(req.body)
+})
+
 const server = createServer(app)
 
 server.listen(config.testServerPort, () => {})

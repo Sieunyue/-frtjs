@@ -1,1 +1,1 @@
-{"version":3,"file":"xhr.d.ts","sourceRoot":"","sources":["../../../../packages/browser/src/plugins/xhr.ts"],"names":[],"mappings":"AAAA,OAAO,EAA6B,cAAc,EAAyB,MAAM,cAAc,CAAA;AAM/F,eAAO,MAAM,cAAc,EAAE,cA4D5B,CAAA"}
+{"version":3,"file":"xhr.d.ts","sourceRoot":"","sources":["../../../../packages/browser/src/plugins/xhr.ts"],"names":[],"mappings":"AAAA,OAAO,EAA6B,cAAc,EAAyB,MAAM,cAAc,CAAA;AAM/F,eAAO,MAAM,cAAc,EAAE,cAgE5B,CAAA"}

@@ -1,8 +1,8 @@
 import { BaseTransport, BaseClient } from '@frtjs/core';
 import { BaseTransportDataType, BaseOptionsType, BaseBreadcrumbType } from '@frtjs/types';
 
-declare class BrowserTransport extends BaseTransport<BrowserOptionsType> {
-    constructor(options: BrowserOptionsType);
+declare class BrowserTransport extends BaseTransport {
+    constructor(client: BaseClient);
     sendToServer(data: BaseTransportDataType): void;
     sendByXml(): (data: BaseTransportDataType) => void;
     sendByBeacon(): (data: BaseTransportDataType) => void;

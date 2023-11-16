@@ -7,12 +7,14 @@ const getTraceId = (breadcrumb: BaseXhrBreadcrumbType) => {
 export const xhrErrorPlugin: BasePluginType = {
   name: BrowserEventTypes.XHR,
   trace(emit) {
+    const clientThis = this
     if ('XMLHttpRequest' in window && typeof window.XMLHttpRequest === 'function') {
       const oXMLHttpRequest = window.XMLHttpRequest
       if (!(window as any).oXMLHttpRequest) {
         // oXMLHttpRequest 为原生的 XMLHttpRequest，可以用以 SDK 进行数据上报，区分业务
         (window as any).oXMLHttpRequest = oXMLHttpRequest
       }
+     
       
       (window as any).XMLHttpRequest = function () {
         // 覆写 window.XMLHttpRequest
@@ -32,6 +34,7 @@ export const xhrErrorPlugin: BasePluginType = {
           url: window.location.href,
           userAgent: navigator.userAgent
         }
+        
         xhr.open = (method, url) => {
           breadcrumb.method = method
           breadcrumb.xhrUrl = url.toString()
@@ -45,11 +48,12 @@ export const xhrErrorPlugin: BasePluginType = {
           const { status, response } = xhr
           breadcrumb.status = status.toString()
           breadcrumb.response = JSON.stringify(response)
-          
           breadcrumb.traceId = getTraceId(breadcrumb)
           
           if (!(status === 200)) {
             emit(breadcrumb)
+          }else{
+            clientThis.pushBreadCrumbs(breadcrumb)
           }
         })
         return xhr

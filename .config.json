@@ -1,5 +1,7 @@
 {
   "testServerPort": 9996,
   "browserUrl": "http://localhost:9996/browser/index.html",
-  "errorUploadUrl": "/errors/upload"
+  "errorUploadUrl": "/errors/upload",
+  "normalUrl": "/api/test",
+  "apiUploadUrl": "/api/upload"
 }

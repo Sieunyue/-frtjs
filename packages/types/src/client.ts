@@ -3,13 +3,13 @@ import { BaseOptionsType, BasePluginType } from '@frtjs/types'
 import { BaseTransport } from '@frtjs/core'
 
 export interface BaseClientType<O extends BaseOptionsType = BaseOptionsType> {
-  
+  breadcrumbs: BaseBreadcrumbType[],
   options: O
   transport: BaseTransport
-  
   use: (plugin: BasePluginType) => BaseClientType
   getOptions: () => O
   send: (data: any) => void
+  pushBreadCrumbs: (data: BaseBreadcrumbType) => void
 }
 
 export interface BaseBreadcrumbType {

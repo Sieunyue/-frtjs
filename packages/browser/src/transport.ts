@@ -1,10 +1,10 @@
 import { BaseTransportDataType } from '@frtjs/types'
-import { BaseTransport } from '@frtjs/core'
+import { BaseClient, BaseTransport } from '@frtjs/core'
 import { BrowserOptionsType } from './client'
 
-export class BrowserTransport extends BaseTransport<BrowserOptionsType> {
-  constructor(options: BrowserOptionsType) {
-    super(options)
+export class BrowserTransport extends BaseTransport {
+  constructor(client: BaseClient) {
+    super(client)
   }
   
   sendToServer(data: BaseTransportDataType): void {
@@ -15,10 +15,9 @@ export class BrowserTransport extends BaseTransport<BrowserOptionsType> {
   
   sendByXml() {
     return (data: BaseTransportDataType) => {
-      console.log(123)
       const xhr = new (window as any).oXMLHttpRequest()
       xhr.setRequestHeader('Content-Type', 'application/json')
-      xhr.open('POST', this.options.dsn!, true)
+      xhr.open('POST', this.client.options.dsn!, true)
       xhr.send(JSON.stringify(data))
     }
   }
@@ -28,8 +27,7 @@ export class BrowserTransport extends BaseTransport<BrowserOptionsType> {
       const headers = {
         type: 'application/json',
       }
-      const status = window.navigator.sendBeacon(this.options.dsn!, new Blob([JSON.stringify(data)], headers))
-      console.log('Beacon status', status)
+      const status = window.navigator.sendBeacon(this.client.options.dsn!, new Blob([JSON.stringify(data)], headers))
       if (!status) this.sendByXml().apply(this, [data])
     }
   }
