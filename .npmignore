@@ -13,3 +13,4 @@ pnpm-workspace.yaml
 rollup.config.js
 tsconfig.build.json
 tsconfig.json
+.idea
