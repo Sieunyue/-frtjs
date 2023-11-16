@@ -1,11 +1,12 @@
-import { EventTypes } from '@frtjs/comm'
-import { BaseOptionsType, BasePluginType } from '@frtjs/types'
-import { BaseTransport } from '@frtjs/core'
+import { BasePluginType } from './plugin'
+import { BaseOptionsType } from './options'
+import { EventTypes } from './constant'
+import { BaseTransportType } from './transport'
 
 export interface BaseClientType<O extends BaseOptionsType = BaseOptionsType> {
   breadcrumbs: BaseBreadcrumbType[],
   options: O
-  transport: BaseTransport
+  transport: BaseTransportType
   use: (plugin: BasePluginType) => BaseClientType
   getOptions: () => O
   send: (data: any) => void

@@ -52,7 +52,7 @@
   },
   "exports": {
     "./browser": {
-      "types": "./dist/browser/index.d.ts",
+      "types": "./dist/types",
       "require": "./dist/browser/index.js",
       "import": "./dist/browser/index.esm.js"
     }

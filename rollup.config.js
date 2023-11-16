@@ -43,22 +43,22 @@ module.exports = [
         tsconfig: 'tsconfig.build.json',
         useTsconfigDeclarationDir: true,
         tsconfigOverride: {
-          compilerOptions: {
-            declaration: true,
-            declarationMap: true,
-            declarationDir: `dist/`, // 类型声明文件的输出目录
-            module: 'ES2015'
-          }
+          // compilerOptions: {
+          //   declaration: true,
+          //   declarationMap: true,
+          //   declarationDir: `dist/`, // 类型声明文件的输出目录
+          //   module: 'ES2015'
+          // }
         }
       }),
       terser()
     ]
   },
   {
-    input: `packages/${pkg}/index.ts`,
+    input: `packages/types/index.ts`,
     output: [
       {
-        file: `dist/${pkg}/index.d.ts`,
+        file: `dist/types/index.d.ts`,
         format: 'esm'
       }
     ],

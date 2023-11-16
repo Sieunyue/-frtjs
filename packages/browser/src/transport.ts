@@ -1,7 +1,5 @@
 import { BaseTransportDataType } from '@frtjs/types'
 import { BaseClient, BaseTransport } from '@frtjs/core'
-import { BrowserOptionsType } from './client'
-
 export class BrowserTransport extends BaseTransport {
   constructor(client: BaseClient) {
     super(client)

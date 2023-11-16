@@ -1,5 +1,5 @@
-import { BaseJSErrorBreadcrumbType, BasePluginType, BaseResourceBreadcrumbType } from '@frtjs/types'
-import { BrowserEventTypes, getTimestampValue, isResourceError, toHashCode, TransportCategory } from '@frtjs/comm'
+import { BaseJSErrorBreadcrumbType, BasePluginType, BaseResourceBreadcrumbType, BrowserEventTypes, TransportCategory } from '@frtjs/types'
+import {  getTimestampValue, isResourceError, toHashCode } from '@frtjs/comm'
 
 const getTraceId = (breadcrumb: BaseResourceBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.filename, breadcrumb.tagName].join(',')).toString()

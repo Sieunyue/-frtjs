@@ -1,4 +1,4 @@
-import { EventTypes } from '@frtjs/comm'
+import { EventTypes } from './constant'
 import { BaseBreadcrumbType, BaseClientType } from './client'
 
 export interface BasePluginType<C extends BaseClientType = BaseClientType> {

@@ -1,5 +1,5 @@
-import { EventTypes, SDK_NAME, SDK_VERSION, TransportCategory } from '@frtjs/comm'
-import { BaseBreadcrumbType, BaseClientType, BaseOptionsType, BasePluginType } from '@frtjs/types'
+import { SDK_NAME, SDK_VERSION } from '@frtjs/comm'
+import { BaseBreadcrumbType, BaseClientType, BaseOptionsType, BasePluginType, EventTypes, TransportCategory } from '@frtjs/types'
 import mitt, { Emitter } from 'mitt'
 import { BaseTransport } from './transport'
 

@@ -1,5 +1,5 @@
-import { BaseJSErrorBreadcrumbType, BasePluginType, BaseXhrBreadcrumbType } from '@frtjs/types'
-import { BrowserEventTypes, getTimestampValue, toHashCode, TransportCategory } from '@frtjs/comm'
+import { BaseJSErrorBreadcrumbType, BasePluginType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '@frtjs/types'
+import { getTimestampValue, toHashCode } from '@frtjs/comm'
 
 const getTraceId = (breadcrumb: BaseXhrBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.method, breadcrumb.xhrUrl].join(',')).toString()
@@ -7,6 +7,7 @@ const getTraceId = (breadcrumb: BaseXhrBreadcrumbType) => {
 export const xhrErrorPlugin: BasePluginType = {
   name: BrowserEventTypes.XHR,
   trace(emit) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const clientThis = this
     if ('XMLHttpRequest' in window && typeof window.XMLHttpRequest === 'function') {
       const oXMLHttpRequest = window.XMLHttpRequest

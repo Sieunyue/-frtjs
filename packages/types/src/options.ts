@@ -1,4 +1,4 @@
-import { TransportAuthInfoType } from '@frtjs/types'
+import { TransportAuthInfoType } from './transport'
 
 export interface BaseOptionsType {
   /**
