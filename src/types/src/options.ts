@@ -19,5 +19,6 @@ export interface BaseOptionsType {
    */
   excludeXhrUrl?: RegExp[]
   
-  getAuthInfo: () => Promise<TransportAuthInfoType>
+  getAuthInfo?: () => Promise<TransportAuthInfoType>
+  headers?: Record<string, any> | (() => Record<string, any>)
 }

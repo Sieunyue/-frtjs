@@ -46,7 +46,7 @@ export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> im
   
   
   async transform(category: TransportCategory, data: BaseBreadcrumbType | BaseBreadcrumbType[] | undefined) {
-    const authInfo = await this.options.getAuthInfo()
+    const authInfo = await this.options.getAuthInfo?.() ?? {}
     const transformData: BaseTransportDataType = {
       ...authInfo,
       category,

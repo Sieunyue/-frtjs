@@ -22,6 +22,21 @@ export class BrowserClient extends BaseClient {
     return (data: BaseTransportDataType) => {
       const xhr = new (window as any).oXMLHttpRequest()
       xhr.setRequestHeader('Content-Type', 'application/json')
+      
+      let headers: Record<string, any> = {}
+      
+      if(this.options.headers){
+        if(typeof this.options.headers === 'function'){
+          headers = this.options.headers()
+        }else{
+          headers = this.options.headers
+        }
+        
+        for (const header of Object.keys(headers)) {
+          xhr.setRequestHeader(header, headers[header])
+        }
+      }
+      
       xhr.open('POST', this.options.dsn!, true)
       xhr.send(JSON.stringify(data))
     }
