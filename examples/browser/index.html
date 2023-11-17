@@ -11,7 +11,7 @@
     maxBreadcrumbs: 5,
     api: true,
     dsn: 'http://localhost:9996/errors/upload',
-    getAuthInfo(){
+    getAuthInfo() {
       return {
         userName: 'e2e test'
       }
@@ -70,7 +70,7 @@
     const xhr = new XMLHttpRequest()
     xhr.open('post', '/api/test')
     xhr.setRequestHeader('content-type', 'application/json')
-    xhr.send(JSON.stringify({date: new Date().valueOf().toString()}))
+    xhr.send(JSON.stringify({ date: new Date().valueOf().toString() }))
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         console.log(xhr.responseText)
@@ -82,7 +82,7 @@
     const xhr = new XMLHttpRequest()
     xhr.open('post', '/exception/post')
     xhr.setRequestHeader('content-type', 'application/json')
-    xhr.send(JSON.stringify({e2e: 'test'}))
+    xhr.send(JSON.stringify({ e2e: 'test' }))
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         console.log(xhr.responseText)
@@ -90,7 +90,7 @@
     }
   }
 
-  function onResourceError(){
+  function onResourceError() {
     const img = document.createElement('img')
     img.src = '/error/img'
     document.body.appendChild(img)
