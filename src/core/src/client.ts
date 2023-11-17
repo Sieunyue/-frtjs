@@ -60,7 +60,13 @@ export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> im
       transformData.context = data
     }
     
-    return this.options.transform ? this.options.transform(transformData) : transformData
+    let r = transformData
+    
+    if (this.options.transform) {
+      r = this.options.transform(transformData)
+    }
+    
+    return r
   }
   
   abstract send(data: any): Promise<void>
