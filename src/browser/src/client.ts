@@ -2,7 +2,7 @@ import { BaseClient } from '@/core'
 import { BaseOptionsType, BaseTransportDataType } from '@/types'
 
 export interface BrowserOptionsType extends BaseOptionsType {
-
+  api?: boolean
 }
 
 export class BrowserClient extends BaseClient<BrowserOptionsType> {

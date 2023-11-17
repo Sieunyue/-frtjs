@@ -1,10 +1,11 @@
 import { BaseJSErrorBreadcrumbType, BasePluginType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '@/types'
 import { getTimestampValue, toHashCode } from '@/comm'
+import { BrowserClient } from '../client.js'
 
 const getTraceId = (breadcrumb: BaseXhrBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.method, breadcrumb.xhrUrl].join(',')).toString()
 }
-export const xhrErrorPlugin: BasePluginType = {
+export const xhrErrorPlugin: BasePluginType<BrowserClient> = {
   name: BrowserEventTypes.XHR,
   trace(emit) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -15,7 +16,6 @@ export const xhrErrorPlugin: BasePluginType = {
         // oXMLHttpRequest 为原生的 XMLHttpRequest，可以用以 SDK 进行数据上报，区分业务
         (window as any).oXMLHttpRequest = oXMLHttpRequest
       }
-      
       
       (window as any).XMLHttpRequest = function () {
         // 覆写 window.XMLHttpRequest
@@ -54,7 +54,9 @@ export const xhrErrorPlugin: BasePluginType = {
           if (!(status === 200)) {
             emit(breadcrumb)
           } else {
-            clientThis.pushBreadCrumbs(breadcrumb)
+            if(clientThis.options.api){
+              clientThis.pushBreadCrumbs(breadcrumb)
+            }
           }
         })
         return xhr
