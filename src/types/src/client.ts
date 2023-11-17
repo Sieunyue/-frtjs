@@ -5,7 +5,7 @@ export interface BaseClientType<O extends BaseOptionsType = BaseOptionsType> {
   options: O
   use: (plugin: BasePluginType) => BaseClientType
   getOptions: () => O
-  send: (data: BaseTransportDataType ) => Promise<void>
+  send: (data: any ) => Promise<void>
   transform: (category: TransportCategory, data: BaseBreadcrumbType | BaseBreadcrumbType[]) => Promise<BaseTransportDataType>
   pushBreadCrumbs: (data: BaseBreadcrumbType) => void
 }

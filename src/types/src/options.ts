@@ -1,4 +1,4 @@
-import { TransportAuthInfoType } from './transport'
+import { BaseTransportDataType, TransportAuthInfoType } from './transport'
 
 export interface BaseOptionsType {
   /**
@@ -21,4 +21,5 @@ export interface BaseOptionsType {
   
   getAuthInfo?: () => Promise<TransportAuthInfoType>
   headers?: Record<string, any> | (() => Record<string, any>)
+  transform?: (data: BaseTransportDataType) => any
 }
