@@ -6,8 +6,10 @@ const getTraceId = (breadcrumb: BaseJSErrorBreadcrumbType) => {
 }
 export const jsErrorPlugin: BasePluginType = {
   name: BrowserEventTypes.JS,
-  trace(emit) {
+  client: null as any,
+  install(client,emit) {
     if (window) {
+      this.client = client
       window.addEventListener('error', (e) => {
         if(!isJsError(e)) return
         const stacks = parseStackFrames(e.error)
@@ -38,6 +40,6 @@ export const jsErrorPlugin: BasePluginType = {
     }
   },
   post(transformedData: BaseJSErrorBreadcrumbType) {
-    this.transform(TransportCategory.ERROR, transformedData).then(r => this.send(r))
+    this.client.transform(TransportCategory.ERROR, transformedData).then(r => this.client.send(r))
   }
 }

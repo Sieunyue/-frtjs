@@ -1,12 +1,14 @@
 import { BaseJSErrorBreadcrumbType, BasePluginType, BasePromiseBreadcrumbType, BrowserEventTypes, TransportCategory } from '@/types'
-import {  getTimestampValue, parseStackFrames, toHashCode } from '@/comm'
+import { getTimestampValue, parseStackFrames, toHashCode } from '@/comm'
 
 const getTraceId = (breadcrumb: BasePromiseBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.message, breadcrumb.errorType].join(',')).toString()
 }
 export const promiseErrorPlugin: BasePluginType = {
   name: BrowserEventTypes.UNHANDLEDREJECTION,
-  trace(emit) {
+  client: null as any,
+  install(client, emit) {
+    this.client = client
     if (window) {
       window.addEventListener('unhandledrejection', (e) => {
         
@@ -33,6 +35,6 @@ export const promiseErrorPlugin: BasePluginType = {
     }
   },
   post(transformedData: BaseJSErrorBreadcrumbType) {
-    this.transform(TransportCategory.ERROR, transformedData).then(r => this.send(r))
+    this.client.transform(TransportCategory.ERROR, transformedData).then(r => this.client.send(r))
   }
 }

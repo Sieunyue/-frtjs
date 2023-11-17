@@ -1,13 +1,15 @@
 import { BaseJSErrorBreadcrumbType, BasePluginType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '@/types'
 import { getTimestampValue, toHashCode } from '@/comm'
-import { BrowserClient } from '../client.js'
+import { BrowserClientType } from '../client.js'
 
 const getTraceId = (breadcrumb: BaseXhrBreadcrumbType) => {
   return toHashCode([breadcrumb.type, breadcrumb.method, breadcrumb.xhrUrl].join(',')).toString()
 }
-export const xhrErrorPlugin: BasePluginType<BrowserClient> = {
+export const xhrErrorPlugin: BasePluginType<BrowserClientType> = {
   name: BrowserEventTypes.XHR,
-  trace(emit) {
+  client: null as any,
+  install(client, emit) {
+    this.client = client
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const clientThis = this
     if ('XMLHttpRequest' in window && typeof window.XMLHttpRequest === 'function') {
@@ -54,8 +56,8 @@ export const xhrErrorPlugin: BasePluginType<BrowserClient> = {
           if (!(status === 200)) {
             emit(breadcrumb)
           } else {
-            if(clientThis.options.api){
-              clientThis.pushBreadCrumbs(breadcrumb)
+            if (clientThis.client.options.api) {
+              clientThis.client.pushBreadCrumbs(breadcrumb)
             }
           }
         })
@@ -69,6 +71,6 @@ export const xhrErrorPlugin: BasePluginType<BrowserClient> = {
     }
   },
   post(transformedData: BaseJSErrorBreadcrumbType) {
-    this.transform(TransportCategory.ERROR, transformedData).then(r => this.send(r))
+    this.client.transform(TransportCategory.ERROR, transformedData).then(r => this.client.send(r))
   }
 }

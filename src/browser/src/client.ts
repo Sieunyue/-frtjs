@@ -1,11 +1,13 @@
 import { BaseClient } from '@/core'
-import { BaseOptionsType, BaseTransportDataType } from '@/types'
+import { BaseClientType, BaseOptionsType, BaseTransportDataType } from '@/types'
 
 export interface BrowserOptionsType extends BaseOptionsType {
   api?: boolean
 }
 
-export class BrowserClient extends BaseClient<BrowserOptionsType> {
+export type BrowserClientType = BaseClientType<BrowserOptionsType>
+
+export class BrowserClient extends BaseClient {
   constructor(options: BrowserOptionsType) {
     super(options)
   }

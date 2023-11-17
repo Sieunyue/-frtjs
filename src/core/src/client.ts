@@ -2,7 +2,7 @@ import { SDK_NAME, SDK_VERSION } from '@/comm'
 import { BaseBreadcrumbType, BaseClientType, BaseOptionsType, BasePluginType, BaseTransportDataType, EventTypes, TransportCategory } from '@/types'
 import mitt, { Emitter } from 'mitt'
 
-export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> implements BaseClientType<O> {
+export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> implements BaseClientType {
   SDK_NAME = SDK_NAME
   SDK_VERSION = SDK_VERSION
   private _subscribe: Emitter<Record<EventTypes, any>>
@@ -16,14 +16,14 @@ export abstract class BaseClient<O extends BaseOptionsType = BaseOptionsType> im
   }
   
   use(plugin: BasePluginType) {
-    plugin.trace.call(this, this._subscribe.emit.bind(this, plugin.name))
+    plugin.install(this, this._subscribe.emit.bind(this, plugin.name))
     
     // this._plugins.push(plugin)
     const wrapperTransform = (...args: any[]) => {
       // 先执行transform
-      const res = plugin.transform?.apply(this, args)
+      const res = plugin.transform?.(...args)
       // 拿到transform返回的数据并传入
-      plugin.post?.call(this, res)
+      plugin.post?.(res)
     }
     
     this._subscribe.on(plugin.name, wrapperTransform)
