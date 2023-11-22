@@ -1,6 +1,7 @@
 test/
 script/
 src/
+app/
 .config.json
 .eslintignore
 .eslintrc.cjs

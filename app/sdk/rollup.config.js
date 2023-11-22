@@ -11,28 +11,30 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const sdkName = 'frtjs'
-const __filename = fileURLToPath(import.meta.url)
 
+const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const outDir = path.resolve(__dirname, '../../lib')
+const resolvePath = (p) => path.resolve(__dirname, p)
 
 /** @type {import('rollup').RollupOptions} */
 export default [
   {
-    input: `src/index.ts`,
+    input: resolvePath('./index.ts'),
     output: [
       {
-        file: `lib/index.js`,
+        file: `${outDir}/index.js`,
         format: 'cjs',
         exports: "named",
         sourcemap: true
       },
       {
-        file: `lib/index.esm.js`,
+        file: `${outDir}/index.esm.js`,
         format: 'esm',
         sourcemap: true
       },
       {
-        file: `lib/index.min.js`,
+        file: `${outDir}/index.min.js`,
         format: 'iife',
         name: 'frtjs',
         exports: "named",
@@ -49,7 +51,7 @@ export default [
       commonjs({ exclude: 'node_modules' }),
       json(),
       typescript({
-        tsconfig: 'tsconfig.build.json',
+        tsconfig: resolvePath('./tsconfig.build.json'),
         useTsconfigDeclarationDir: true
         // tsconfigOverride: {
         //   compilerOptions: {
@@ -65,10 +67,10 @@ export default [
     ]
   },
   {
-    input: `src/index.ts`,
+    input: resolvePath('./index.ts'),
     output: [
       {
-        file: `lib/index.d.ts`,
+        file: `${outDir}/index.d.ts`,
         format: 'esm'
       }
     ],

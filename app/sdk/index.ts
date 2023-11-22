@@ -1,4 +1,4 @@
-import { default as browser } from './browser'
+import { default as browser } from './src/browser'
 
 
 const frtjs = {

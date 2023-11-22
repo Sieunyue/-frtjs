@@ -1,7 +1,7 @@
 import puppeteer, { Browser, Page } from 'puppeteer'
 import config from '../../../.config.json'
-import { BaseJSErrorBreadcrumbType, BaseResourceBreadcrumbType, BaseTransportDataType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '../../../src/types'
-import { SDK_NAME, SDK_VERSION } from '../../../src/comm'
+import { BaseJSErrorBreadcrumbType, BaseResourceBreadcrumbType, BaseTransportDataType, BaseXhrBreadcrumbType, BrowserEventTypes, TransportCategory } from '../../../app/sdk/src/types'
+import { SDK_NAME, SDK_VERSION } from '../../../app/sdk/src/comm'
 
 describe('Browser monitor e2e:', () => {
   let browser: Browser

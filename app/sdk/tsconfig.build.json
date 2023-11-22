@@ -6,7 +6,8 @@
 //    "declarationDir": "./dist/src/", // 类型声明文件的输出目录
   },
   "include": [
-    "src"
+    "src",
+    "index.ts"
   ],
   "exclude": [
     "node_modules"
